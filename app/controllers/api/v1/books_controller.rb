@@ -1,14 +1,14 @@
 class Api::V1::BooksController < ApplicationController
-  before_action :find_book, only: [:show, :delete]
+  before_action :find_book, only: [:show, :destroy]
 
   def index
     @books = Book.all
-    render json: @books, status: 200
+    render json: @books, status: :ok
   end
 
   def show
     if @book
-      render json: @book, status: 200
+      render json: @book, status: :ok
     else
       show_error
     end
@@ -18,16 +18,16 @@ class Api::V1::BooksController < ApplicationController
     @book = Book.new(book_params)
 
     if @book.save
-      render json: @book, status: 200
+      render json: @book, status: :ok
     else
-      show_error
+      render json: {error: 'Error creating book.'}, status: :bad_request
     end
   end
 
   def destroy
     if @book
       @book.destroy
-      render json: @book, status: 400
+      render status: :no_content
     else
       show_error
     end
@@ -40,10 +40,10 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def show_error
-      render json: {error: 'Not found.'}, status: 400
+      render json: {error: 'Not found.'}, status: :bad_request
   end
 
   def find_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by(id: params[:id])
   end
 end

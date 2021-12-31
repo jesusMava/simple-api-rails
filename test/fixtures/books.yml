@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  price: MyString
+  id: 1
+  name: Hello world
+  price: 259
 
 two:
-  name: MyString
-  price: MyString
+  id: 2
+  name: Goodbye world
+  price: 456
